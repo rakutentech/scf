@@ -758,7 +758,8 @@ pipeline {
                         sleep 5
                     done
                     set -x
-
+                '''
+                sh '''
                     helm install output/unzipped/helm/uaa\${suffix} \
                         --name ${jobBaseName()}-${BUILD_NUMBER}-uaa \
                         --namespace ${jobBaseName()}-${BUILD_NUMBER}-uaa \
