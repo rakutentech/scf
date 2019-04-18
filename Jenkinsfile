@@ -759,7 +759,7 @@ pipeline {
                     done
                     set -x
                 '''
-                sh '''
+                sh """
                     helm install output/unzipped/helm/uaa\${suffix} \
                         --name ${jobBaseName()}-${BUILD_NUMBER}-uaa \
                         --namespace ${jobBaseName()}-${BUILD_NUMBER}-uaa \
@@ -804,7 +804,7 @@ pipeline {
                         make/wait "\${ns}"
                     done
                     kubectl get pods --all-namespaces
-                '''
+                """
             }
         }
 
