@@ -16,6 +16,28 @@
 - type: remove
   path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder
 
+- type: replace
+  path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/cc/install_buildpacks
+  value:
+  - name: binary_buildpack
+    package: binary-buildpack-cflinuxfs3
+
+- type: replace
+  path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/cc/core_file_pattern?
+  value: false
+
+- type: replace
+  path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/bosh_containerization?
+  value:
+    pre_render_scripts:
+    - |
+      set -o errexit
+
+      patch /var/vcap/all-releases/jobs-src/capi/cloud_controller_ng/templates/pre-start.sh.erb << EOT
+      7d6
+      < tee_output_to_sys_log "cloud_controller_ng.\$(basename "\$0")"
+      EOT
+
 # Set buildpacks stemcells.
 - type: replace
   path: /releases/name=binary-buildpack/stemcell?
@@ -27,3 +49,24 @@
 - type: replace
   path: /instance_groups/name=api/jobs/name=binary-buildpack/properties?/bosh_containerization?/bpm?/processes?
   value: []
+
+- type: remove
+  path: /instance_groups/name=api/jobs/name=dotnet-core-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=go-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=java-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=nodejs-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=nginx-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=r-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=php-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=python-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=ruby-buildpack
+- type: remove
+  path: /instance_groups/name=api/jobs/name=staticfile-buildpack
