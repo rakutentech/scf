@@ -1,0 +1,29 @@
+# Selectively remove jobs temporarily.
+- type: remove
+  path: /instance_groups/name=api/jobs/name=route_registrar
+- type: remove
+  path: /instance_groups/name=api/jobs/name=statsd_injector
+- type: remove
+  path: /instance_groups/name=api/jobs/name=file_server
+- type: remove
+  path: /instance_groups/name=api/jobs/name=routing-api
+- type: remove
+  path: /instance_groups/name=api/jobs/name=policy-server
+- type: remove
+  path: /instance_groups/name=api/jobs/name=policy-server-internal
+- type: remove
+  path: /instance_groups/name=api/jobs/name=cc_uploader
+- type: remove
+  path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder
+
+# Set buildpacks stemcells.
+- type: replace
+  path: /releases/name=binary-buildpack/stemcell?
+  value:
+    os: opensuse-42.3
+    version: 36.g03b4653-30.80-7.0.0_340.g2b599a90
+
+# Add bosh_containerization properties.
+- type: replace
+  path: /instance_groups/name=api/jobs/name=binary-buildpack/properties?/bosh_containerization?/bpm?/processes?
+  value: []
